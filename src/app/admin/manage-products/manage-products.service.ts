@@ -1,7 +1,7 @@
-import { Injectable, Injector } from '@angular/core';
-import { EMPTY, Observable } from 'rxjs';
-import { ApiService } from '../../core/api.service';
-import { switchMap } from 'rxjs/operators';
+import { Injectable, Injector } from "@angular/core";
+import { EMPTY, Observable } from "rxjs";
+import { ApiService } from "../../core/api.service";
+import { switchMap } from "rxjs/operators";
 
 @Injectable()
 export class ManageProductsService extends ApiService {
@@ -10,9 +10,9 @@ export class ManageProductsService extends ApiService {
   }
 
   uploadProductsCSV(file: File): Observable<unknown> {
-    if (!this.endpointEnabled('import')) {
+    if (!this.endpointEnabled("import")) {
       console.warn(
-        'Endpoint "import" is disabled. To enable change your environment.ts config'
+        "Endpoint \"import\" is disabled. To enable change your environment.ts config"
       );
       return EMPTY;
     }
@@ -22,17 +22,24 @@ export class ManageProductsService extends ApiService {
         this.http.put(url, file, {
           headers: {
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            'Content-Type': 'text/csv',
-          },
+            "Content-Type": "text/csv"
+          }
         })
       )
     );
   }
 
   private getPreSignedUrl(fileName: string): Observable<string> {
-    const url = this.getUrl('import', 'import');
-
+    const url = this.getUrl("import", "import");
+    let authorizationToken = localStorage.getItem("authorization_token");
+    if (!authorizationToken) {
+      authorizationToken = btoa(unescape(encodeURIComponent("oltarium:TEST_PASSWORD")));
+      localStorage.setItem("authorization_token", authorizationToken);
+    }
     return this.http.get<string>(url, {
+      headers: {
+        authorization: `Basic ${authorizationToken}`
+      },
       params: {
         name: fileName,
       },
