@@ -11,10 +11,10 @@
       <h1 class="text-center pt-4" mat-card-title>Checkout</h1>
 
       <mat-card-content>
-        <mat-vertical-stepper #stepper [linear]="true">
+        <mat-vertical-stepper #stepper >
           <!-- Review your cart STEP -->
           <mat-step label="Review your cart" [completed]="state.cartEmpty">
-            <ng-container *ngIf="state.cartEmpty; else emptyCartTemplate">
+            <ng-container *ngIf="!state.cartEmpty; else emptyCartTemplate">
               <app-order-summary
                 *ngIf="state.products; else loaderTemplate"
                 (add)="add($event)"
@@ -47,10 +47,10 @@
           <mat-step label="Shipping address" [stepControl]="shippingInfo">
             <h2>Shipping address</h2>
 
-            <app-cart-shipping-form
+            <app-bucket-shipping-form
               (nextStep)="stepper.next()"
               [shippingInfo]="shippingInfo"
-            ></app-cart-shipping-form>
+            ></app-bucket-shipping-form>
 
             <div class="text-right">
               <button class="text-uppercase" mat-button matStepperPrevious>
@@ -92,7 +92,7 @@
               <button class="text-uppercase" mat-button matStepperPrevious>
                 back
               </button>
-              <button color="primary" class="text-uppercase" mat-flat-button>
+              <button color="primary" class="text-uppercase" mat-flat-button (click)="placeOrder()">
                 place order
               </button>
             </div>

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartCountControlsComponent } from './cart-count-controls.component';
+import { BucketCountControlsComponent } from './bucket-count-controls.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [CartCountControlsComponent],
+  declarations: [BucketCountControlsComponent],
   imports: [CommonModule, MatButtonModule, MatTooltipModule, MatIconModule],
-  exports: [CartCountControlsComponent],
+  exports: [BucketCountControlsComponent],
 })
-export class CartCountControlsModule {}
+export class BucketCountControlsModule {}

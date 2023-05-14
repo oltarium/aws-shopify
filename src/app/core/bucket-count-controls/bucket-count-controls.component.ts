@@ -8,12 +8,12 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-cart-count-controls',
-  templateUrl: './cart-count-controls.component.html',
-  styleUrls: ['./cart-count-controls.component.scss'],
+  selector: 'app-bucket-count-controls',
+  templateUrl: './bucket-count-controls.component.html',
+  styleUrls: ['./bucket-count-controls.component.scss'],
   exportAs: 'countControls',
 })
-export class CartCountControlsComponent {
+export class BucketCountControlsComponent {
   @Input() count!: number;
   @Input() available!: number;
   @Input() productName!: string;

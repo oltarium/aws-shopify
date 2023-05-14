@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CartCountControlsComponent } from './cart-count-controls.component';
+import { BucketCountControlsComponent } from './bucket-count-controls.component';
 
 describe('CartCountControlsComponent', () => {
-  let component: CartCountControlsComponent;
-  let fixture: ComponentFixture<CartCountControlsComponent>;
+  let component: BucketCountControlsComponent;
+  let fixture: ComponentFixture<BucketCountControlsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CartCountControlsComponent],
+      declarations: [BucketCountControlsComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CartCountControlsComponent);
+    fixture = TestBed.createComponent(BucketCountControlsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

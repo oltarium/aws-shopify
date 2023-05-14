@@ -1,74 +1,60 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { Product } from '../product.interface';
-import { CartService } from '../../cart/cart.service';
-import { Observable } from 'rxjs';
-import { map, shareReplay, tap } from 'rxjs/operators';
-import { CartCountControlsComponent } from '../../core/cart-count-controls/cart-count-controls.component';
+import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import { Product } from "../product.interface";
+import { CartService } from "../../cart/cart.service";
+import { BucketCountControlsComponent } from "../../core/bucket-count-controls/bucket-count-controls.component";
+import { CardStoreService } from "../../core/card-store.service";
+import { map } from "rxjs/operators";
 
 @Component({
-  selector: 'app-product-item',
-  templateUrl: './product-item.component.html',
-  styleUrls: ['./product-item.component.scss'],
+  selector: "app-product-item",
+  templateUrl: "./product-item.component.html",
+  styleUrls: ["./product-item.component.scss"]
 })
 export class ProductItemComponent implements OnInit {
   @Input() product!: Product;
   @Input() index!: number;
 
-  @ViewChild('cartBtn', { static: false, read: ElementRef }) cartBtn:
+  @ViewChild("cartBtn", { static: false, read: ElementRef }) cartBtn:
     | ElementRef<HTMLButtonElement>
     | undefined;
-  @ViewChild('controls', { static: false }) countControls:
-    | CartCountControlsComponent
+  @ViewChild("controls", { static: false }) countControls:
+    | BucketCountControlsComponent
     | undefined;
 
-  countInCart$!: Observable<number>;
+  countInCart = 0;
 
-  constructor(private readonly cartService: CartService) {}
+  constructor(
+    private readonly cartService: CartService,
+    private readonly cardStoreService: CardStoreService
+  ) {
+  }
 
   get id(): string {
     return this.product.id;
   }
 
   ngOnInit(): void {
-    this.countInCart$ = this.cartService.cart$.pipe(
-      map((cart) => {
-        if (!(this.id in cart)) {
-          return 0;
-        }
-
-        return cart[this.id];
-      }),
-      this.updateFocusIfNeeded(),
-      shareReplay({
-        bufferSize: 1,
-        refCount: true,
-      })
-    );
+    this.cardStoreService.cardItems$
+      .pipe(
+        map(
+          (epics) =>
+            epics.filter((epic) => epic.productId === this.product.id)[0]
+        )
+      )
+      .subscribe((card) => {
+        this.countInCart = card?.count || 0;
+      });
   }
 
-  add(): void {
-    this.cartService.addItem(this.id);
+  async add() {
+    if (!localStorage.getItem('USERID')) {
+      alert('To add items you need to login')
+      return;
+    }
+    this.cardStoreService.addItem(this.product);
   }
 
-  remove(): void {
-    this.cartService.removeItem(this.id);
-  }
-
-  /** Move focus to a corresponding control when controls switch */
-  private updateFocusIfNeeded() {
-    let prev: number;
-
-    return (observable: Observable<number>): Observable<number> =>
-      observable.pipe(
-        tap((curr) => {
-          if (prev === 0 && curr === 1) {
-            setTimeout(() => this.countControls?.focusAddBtn());
-          } else if (prev === 1 && curr === 0) {
-            setTimeout(() => this.cartBtn?.nativeElement.focus());
-          }
-
-          prev = curr;
-        })
-      );
+  async remove() {
+    this.cardStoreService.removeItem(this.product);
   }
 }

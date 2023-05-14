@@ -15,6 +15,9 @@ import { FilePickerModule } from '../shared/file-picker/file-picker.module';
 import { ManageProductsService } from './manage-products/manage-products.service';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { MatSnackBarModule, MatSnackBarRef } from "@angular/material/snack-bar";
+import { MatIconModule } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatBadgeModule } from "@angular/material/badge";
 
 @NgModule({
   declarations: [
@@ -33,9 +36,12 @@ import { MatSnackBarModule, MatSnackBarRef } from "@angular/material/snack-bar";
     MatButtonModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatBadgeModule
   ],
-  providers: [OrdersService, ManageProductsService, {
+  providers: [ManageProductsService, {
     provide: MatSnackBarRef,
     useValue: {}
   },],

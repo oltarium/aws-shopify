@@ -1,0 +1,28 @@
+<div class="example-form">
+  <p>
+  <mat-form-field class="example-full-width">
+    <mat-label>Username</mat-label>
+    <input matInput placeholder="username" required value="" [formControl]="usernameControl">
+  </mat-form-field>
+  </p>
+  <p>
+  <mat-form-field class="example-full-width">
+    <mat-label>Password</mat-label>
+    <input matInput placeholder="password" value="" [formControl]="passwordControl">
+  </mat-form-field>
+  </p>
+  <p>
+  <mat-form-field class="example-full-width">
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="name" value="" [formControl]="nameControl">
+  </mat-form-field>
+  </p>
+  <button mat-raised-button color="primary" (click)="signUp()">
+    Sign up
+  </button>
+
+  <button routerLink="/login" mat-raised-button color="primary">
+    Login
+  </button>
+</div>
+

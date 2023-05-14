@@ -5,6 +5,7 @@
 
   <!-- Account btn -->
   <button
+    *ngIf="(isLogged$ | async)?.valueOf()"
     [matMenuTriggerFor]="menu"
     matTooltip="Open account menu"
     mat-icon-button
@@ -12,12 +13,24 @@
     <mat-icon>account_circle</mat-icon>
   </button>
 
+
+  <button *ngIf="!(isLogged$ | async)?.valueOf()" mat-button style="color: chartreuse">
+    <a routerLink="login">Login</a>
+  </button>
+  <button *ngIf="!(isLogged$ | async)?.valueOf()" mat-button color="accent">
+    <a routerLink="signup">Sign up</a>
+  </button>
+  <button *ngIf="(isLogged$ | async)?.valueOf()" mat-button color="accent" (click)="logout()">
+    Logout
+  </button>
   <!-- Cart btn -->
-  <button routerLink="cart" matTooltip="Go to cart" mat-icon-button>
-    <mat-icon [matBadge]="totalInCart$ | async" matBadgeColor="accent"
-      >shopping_cart</mat-icon
+  <button *ngIf="(isLogged$ | async)?.valueOf()" routerLink="cart" matTooltip="Go to cart" mat-icon-button>
+    <mat-icon [matBadge]="totalCount$ | async" matBadgeColor="accent"
+    >shopping_cart
+    </mat-icon
     >
   </button>
+
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">

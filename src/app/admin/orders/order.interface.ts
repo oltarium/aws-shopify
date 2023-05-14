@@ -1,4 +1,5 @@
 import { ShippingInfo } from '../../cart/shipping-info.interface';
+import { Status } from "../../cart/card.interface";
 
 export enum OrderStatus {
   open = 'open',
@@ -17,7 +18,11 @@ export interface StatusHistory {
 
 export interface Order {
   id?: string;
-  address: ShippingInfo;
-  items: unknown[]; // TODO: find exact
-  statusHistory: StatusHistory[];
+  userId: number,
+  cartId: number,
+  status: Status,
+  payment: any,
+  delivery: ShippingInfo,
+  total: number,
+  comments: string
 }

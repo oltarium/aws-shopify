@@ -18,6 +18,10 @@ import { CONFIG_TOKEN } from './core/injection-tokens/config.token';
 import { environment } from '../environments/environment';
 import { ErrorPrintInterceptor } from './core/interceptors/error-print.interceptor';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { MatInputModule } from "@angular/material/input";
+import { ReactiveFormsModule } from "@angular/forms";
 
 const interceptors: Provider[] = [
   {
@@ -28,7 +32,7 @@ const interceptors: Provider[] = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, LoginComponent, SignupComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -43,6 +47,8 @@ const interceptors: Provider[] = [
     HttpClientModule,
     MatBadgeModule,
     MatSnackBarModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   providers: [
     interceptors,

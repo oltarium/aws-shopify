@@ -12,43 +12,16 @@ import { ApiService } from '../core/api.service';
 })
 export class ProductsService extends ApiService {
   createNewProduct(product: Product): Observable<Product> {
-    if (!this.endpointEnabled('bff')) {
-      console.warn(
-        'Endpoint "bff" is disabled. To enable change your environment.ts config'
-      );
-      return EMPTY;
-    }
-
     const url = this.getUrl('bff', 'products');
     return this.http.post<Product>(url, product);
   }
 
   editProduct(id: string, changedProduct: Product): Observable<Product> {
-    if (!this.endpointEnabled('bff')) {
-      console.warn(
-        'Endpoint "bff" is disabled. To enable change your environment.ts config'
-      );
-      return EMPTY;
-    }
-
     const url = this.getUrl('bff', `products/${id}`);
     return this.http.put<Product>(url, changedProduct);
   }
 
   getProductById(id: string): Observable<Product | null> {
-    if (!this.endpointEnabled('bff')) {
-      console.warn(
-        'Endpoint "bff" is disabled. To enable change your environment.ts config'
-      );
-      return this.http
-        .get<Product[]>('/assets/products.json')
-        .pipe(
-          map(
-            (products) => products.find((product) => product.id === id) || null
-          )
-        );
-    }
-
     const url = this.getUrl('bff', `products/${id}`);
     return this.http.get<{ product: Product }>(url).pipe(
       map(({ productItem, stockItem }: any) => ({
@@ -62,13 +35,11 @@ export class ProductsService extends ApiService {
   }
 
   getProducts(): Observable<Product[]> {
-    if (!this.endpointEnabled('bff')) {
-      console.warn(
-        'Endpoint "bff" is disabled. To enable change your environment.ts config'
-      );
-      return this.http.get<Product[]>('/assets/products.json');
-    }
-
+    return of([
+      { id: "2", title: 'Fishing Rod', price: 50, count: 3, description: 'Modern fishing rod' },
+      { id: "3", title: 'Hooks', price: 5, count: 12, description: 'Set of hooks' },
+      { id: "4", title: 'Fishing boots', price: 15, count: 4, description: 'Resin boots' },
+    ]);
     const url = this.getUrl('bff', 'products');
     return this.http.get<Product[]>(url).pipe(
       map(({ productsList, stocksList }: any) => {

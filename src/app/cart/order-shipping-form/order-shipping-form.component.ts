@@ -2,11 +2,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-cart-shipping-form',
-  templateUrl: './cart-shipping-form.component.html',
-  styleUrls: ['./cart-shipping-form.component.scss'],
+  selector: 'app-bucket-shipping-form',
+  templateUrl: './order-shipping-form.component.html',
+  styleUrls: ['./order-shipping-form.component.scss'],
 })
-export class CartShippingFormComponent {
+export class OrderShippingFormComponent {
   @Input() shippingInfo!: UntypedFormGroup;
 
   @Output() nextStep = new EventEmitter<void>();
